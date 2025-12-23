@@ -150,7 +150,7 @@ jobs:
           echo "📦 Tamanho do APK: $APK_SIZE"
 
       - name: 📤 Upload APK como artefato
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: android-apk-debug
           path: build/app/outputs/flutter-apk/app-debug.apk
