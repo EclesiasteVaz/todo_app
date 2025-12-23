@@ -1,6 +1,6 @@
 # todolist
 
-É um projeto construido com o foco de usar conceitos complexos como bloc, banco de dados em um projeto que pode ser simples.
+É um projeto construido com o foco de usar conceitos complexos como bloc,arquitetura limpa, desacomplamento de código, banco de dados em um projeto que pode ser simples.
 
 ## Indice
 - Tecnológias usadas
