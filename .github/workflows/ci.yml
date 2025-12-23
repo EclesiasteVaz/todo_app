@@ -33,14 +33,14 @@ jobs:
       - name: ☕ Setup Java
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
 
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.38.4'
-          channel: 'stable'
+          flutter-version: "3.38.4"
+          channel: "stable"
           cache: true
 
       - name: 📦 Instalar dependências
@@ -93,7 +93,7 @@ jobs:
   #         if [ -f coverage/lcov.info ]; then
   #           COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')
   #           echo "📊 Cobertura atual: $COVERAGE%"
-            
+
   #           MIN_COVERAGE=70
   #           if (( $(echo "$COVERAGE < $MIN_COVERAGE" | bc -l) )); then
   #             echo "❌ Cobertura abaixo do mínimo ($MIN_COVERAGE%)"
@@ -116,46 +116,46 @@ jobs:
   # ============================================
   # 🤖 JOB 3: BUILD ANDROID
   # ============================================
-  # build-android:
-  #   name: 🤖 Build Android
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 30
-  #   needs: [analyze, test]
+  build-android:
+    name: 🤖 Build Android
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [analyze, test]
 
-  #   steps:
-  #     - name: 📥 Checkout código
-  #       uses: actions/checkout@v6
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v6
 
-  #     - name: ☕ Setup Java
-  #       uses: actions/setup-java@v5
-  #       with:
-  #         distribution: 'temurin'
-  #         java-version: '17'
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "17"
 
-  #     - name: 🐦 Setup Flutter
-  #       uses: subosito/flutter-action@v2
-  #       with:
-  #         flutter-version: '3.38.4'
-  #         channel: 'stable'
-  #         cache: true
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.38.4"
+          channel: "stable"
+          cache: true
 
-  #     - name: 📦 Instalar dependências
-  #       run: flutter pub get
+      - name: 📦 Instalar dependências
+        run: flutter pub get
 
-  #     - name: 🔨 Build APK (Debug)
-  #       run: flutter build apk --debug --target-platform android-arm64
+      - name: 🔨 Build APK (Debug)
+        run: flutter build apk --debug --target-platform android-arm64
 
-  #     - name: 📊 Verificar tamanho do APK
-  #       run: |
-  #         APK_SIZE=$(du -h build/app/outputs/flutter-apk/app-debug.apk | cut -f1)
-  #         echo "📦 Tamanho do APK: $APK_SIZE"
+      - name: 📊 Verificar tamanho do APK
+        run: |
+          APK_SIZE=$(du -h build/app/outputs/flutter-apk/app-debug.apk | cut -f1)
+          echo "📦 Tamanho do APK: $APK_SIZE"
 
-  #     - name: 📤 Upload APK como artefato
-  #       uses: actions/upload-artifact@v5
-  #       with:
-  #         name: android-apk-debug
-  #         path: build/app/outputs/flutter-apk/app-debug.apk
-  #         retention-days: 7
+      - name: 📤 Upload APK como artefato
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-apk-debug
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          retention-days: 7
 
   # ============================================
   # 🍎 JOB 4: BUILD iOS (apenas em macOS)
@@ -209,8 +209,8 @@ jobs:
       - name: 🐦 Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.38.4'
-          channel: 'stable'
+          flutter-version: "3.38.4"
+          channel: "stable"
           cache: true
 
       - name: 📦 Instalar dependências
@@ -223,14 +223,14 @@ jobs:
         run: |
           # Instala ferramenta de análise de segurança
           dart pub global activate pana
-          
+
           echo "🔍 Analisando segurança do projeto..."
           # Aqui você pode adicionar ferramentas como Snyk, Trivy, etc.
 
       - name: 🔐 Verificar exposição de secrets
         run: |
           echo "🔍 Verificando se há secrets expostos no código..."
-          
+
           # Verifica se há tokens ou chaves no código
           if grep -r -i -E "(api_key|apikey|secret|password|token|bearer)" --exclude-dir={.git,build,ios/Pods} --exclude="*.{yaml,md,lock,g.dart,freezed.dart}" .; then
             echo "⚠️  Possível exposição de secrets detectada!"
